@@ -8,9 +8,24 @@
 import SwiftUI
 
 struct ContentView: View {
+    
+    @State private var rating: Int?
     var body: some View {
-        Text("Hello, world!")
-            .padding()
+        VStack {
+            RatingView(rating: $rating)
+            Text(rating != nil ? "Your rating: \(rating!)" : "")
+        }
+        
+            .onAppear {
+                HTTPClient().getMoviesBy(search: "marvel") { result in
+                    switch result {
+                    case .success(let movies):
+                        print(movies)
+                    case .failure(let error):
+                        print(error.localizedDescription)
+                    }
+                }
+            }
     }
 }
 
