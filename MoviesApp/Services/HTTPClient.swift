@@ -34,4 +34,22 @@ class HTTPClient {
             
         }.resume()
     }
+    
+    func getMovieDetailsBy(imdbId: String, completion: @escaping (Result<MovieDetails, NetworkError>) -> Void) {
+        
+        guard let url = URL.forMovieDetailsBy(imdbId: imdbId) else {
+            return completion(.failure(.badURL))
+        }
+
+        URLSession.shared.dataTask(with: url) { data, response, error in
+            guard let data = data, error == nil else {
+                return completion(.failure(.noData))
+            }
+
+            guard let movieDetails = try? JSONDecoder().decode(MovieDetails.self, from: data) else{
+                return completion(.failure(.decodingError))
+            }
+            completion(.success(movieDetails))
+        }.resume()
+    }
 }
