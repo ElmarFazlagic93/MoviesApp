@@ -9,4 +9,10 @@ import Foundation
 
 struct Constants {
    static let API_KEY = "e7b0e27b"
+    
+    struct Colors{
+        static let BackgroundColor = "BackgroundColor"
+        static let LightBackgroundColor = "LightBackgroundColor"
+        static let PrimaryTextColor = "PrimaryTextColor"
+    }
 }

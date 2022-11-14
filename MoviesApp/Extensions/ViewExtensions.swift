@@ -13,3 +13,18 @@ extension View {
         return NavigationView { self }
     }
 }
+
+struct PrimaryColorModifier: ViewModifier {
+    func body(content: Content) -> some View {
+        content
+            .foregroundColor(Color(Constants.Colors.PrimaryTextColor))
+    }
+}
+
+struct BackgroundColorStyle: ViewModifier {
+
+    func body(content: Content) -> some View {
+        return content
+            .background(Color(Constants.Colors.BackgroundColor))
+    }
+}

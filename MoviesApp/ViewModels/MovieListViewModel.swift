@@ -12,7 +12,7 @@ class MovieListViewModel: ObservableObject {
     @Published var didExecuteSearch: Bool = false
     let httpClient = HTTPClient()
     
-    func SearchByName(_ name: String) {
+    func searchByName(_ name: String) {
         
         if name.isEmpty {
             DispatchQueue.main.async {

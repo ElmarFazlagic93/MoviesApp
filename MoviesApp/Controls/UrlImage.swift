@@ -14,6 +14,16 @@ struct UrlImage: View {
     
     @ObservedObject var imageLoader = ImageLoader()
     
+    var fetchUIImage: UIImage? {
+        get {
+            if let data = self.imageLoader.downloadedData, let image = UIImage(data: data) {
+                return image
+            }
+            
+            return nil
+        }
+    }
+    
     init(url: String, placeholder: String = "placeholder") {
         self.url = url
         self.placeholder = placeholder
@@ -21,7 +31,7 @@ struct UrlImage: View {
     }
     
     var body: some View {
-        if let data = self.imageLoader.downloadedData, let image = UIImage(data: data) {
+        if let image = fetchUIImage {
             return Image(uiImage: image)
                 .resizable()
         }

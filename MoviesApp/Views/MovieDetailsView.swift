@@ -19,19 +19,25 @@ struct MovieDetailsView: View {
                 
                 Text(movieDetailsViewModel.title)
                     .font(.title)
+                    .modifier(PrimaryColorModifier())
                 Text(movieDetailsViewModel.plot)
+                    .modifier(PrimaryColorModifier())
                 Text("Director")
                     .fontWeight(.bold)
+                    .modifier(PrimaryColorModifier())
                 Text(movieDetailsViewModel.director)
+                    .modifier(PrimaryColorModifier())
                 
                 HStack{
                     RatingView(rating: .constant(movieDetailsViewModel.rating))
                     Text("\(movieDetailsViewModel.rating)/10")
+                        .modifier(PrimaryColorModifier())
                 }.padding(.top, 10)
                 
                 Spacer()
                 
-            }.padding()
+            }.padding()            
+            .modifier(BackgroundColorStyle())
             .navigationTitle(movieDetailsViewModel.title)
         }
     }

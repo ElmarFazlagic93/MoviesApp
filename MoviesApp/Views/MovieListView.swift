@@ -15,10 +15,26 @@ struct MovieListView: View {
     var body: some View {
         if movies.count == 0 {
             if self.didExecuteSearch {
-                Text("No movies found!")
+                VStack {
+                    Image(systemName: "x.circle")
+                        .font(.system(size: 56.0))
+                        .modifier(PrimaryColorModifier())
+                        .padding(.bottom, 16)
+                          
+                    Text("No movies found!")
+                        .modifier(PrimaryColorModifier())
+                }
             }
             else {
-                Text("Type in the movie name to search for movies")
+                VStack {
+                    Image(systemName: "magnifyingglass")
+                        .font(.system(size: 56.0))
+                        .modifier(PrimaryColorModifier())
+                        .padding(.bottom, 16)
+                    
+                    Text("Type in the movie name to search for movies")
+                        .modifier(PrimaryColorModifier())
+                }
             }
         }
         else {            
@@ -26,6 +42,13 @@ struct MovieListView: View {
                 NavigationLink(destination: MovieDetailsScreen(imdbId: movie.imdbId)) {
                     MovieCellView(movie: movie)
                 }
+                //.modifier(BackgroundColorStyle())
+                .listRowBackground(Color(Constants.Colors.LightBackgroundColor))
+            }
+            .background(Color(Constants.Colors.BackgroundColor))
+            .onAppear {
+                // Set the default to clear
+                UITableView.appearance().backgroundColor = .clear
             }
         }
     }
@@ -42,12 +65,15 @@ struct MovieCellView: View {
             VStack(alignment: .leading) {
                 Text(movie.title)
                     .font(.headline)
+                    .modifier(PrimaryColorModifier())
                 
                 Text(movie.year)
                     .opacity(0.5)
                     .padding(.top, 2)
+                    .modifier(PrimaryColorModifier())
             }.padding(5)
             Spacer()
-        }.contentShape(Rectangle())
+        }
+        .contentShape(Rectangle())
     }
 }

@@ -21,11 +21,9 @@ class MovieDetatailsViewModel: ObservableObject {
             switch result {
             case .success(let movieDetails):
                 DispatchQueue.main.async {
-                    print("Success hereee")
                     self.movieDetails = movieDetails
                 }
             case .failure(let error):
-                print("Failure hereee")
                 print(error.localizedDescription)
             }
         }

@@ -19,6 +19,7 @@ struct MovieDetailsScreen: View {
         .onAppear {
             self.movieDetailsViewModel.getDetailsBy(imdbId: self.imdbId)
         }
+        .modifier(BackgroundColorStyle())
     }
 }
 
