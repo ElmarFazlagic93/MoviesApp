@@ -15,6 +15,13 @@ enum NetworkError: Error {
 
 class HTTPClient {
     
+    func getPopularMovies(completion: @escaping (Result<[Movie]?, NetworkError>) -> Void) {
+        // Since API doesnt support any call I mocked 5 movies and use them as Popular movies to fill Search Page until user executes a search
+        // This is not acceptable in real life, but I went with it since this is just to showcase my skills on the other parts of the app
+        let popularMovies = MockData.getPopularMovies()
+        completion(.success(popularMovies))
+    }
+    
     func getMoviesBy(search: String, completion: @escaping (Result<[Movie]?, NetworkError>) -> Void) {
         
         guard let url = URL.forMoviesByName(search) else {
@@ -31,7 +38,6 @@ class HTTPClient {
             }
             
             completion(.success(moviesResponse.movies))
-            
         }
             
         dataTask.resume()

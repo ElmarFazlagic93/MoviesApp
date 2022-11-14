@@ -9,16 +9,30 @@ import Foundation
 
 class MovieListViewModel: ObservableObject {
     @Published var movies = [MovieViewModel]()
-    @Published var didExecuteSearch: Bool = false
     let httpClient = HTTPClient()
+    
+    func getPopularMovies() {
+        httpClient.getPopularMovies { result in
+            switch result {
+            case .success(let moviesResult):
+                if let movies = moviesResult {
+                    DispatchQueue.main.async {
+                        self.movies = movies.map(MovieViewModel.init)
+                    }
+                }
+            case .failure(let error):
+                print(error.localizedDescription)
+                DispatchQueue.main.async {
+                    self.movies = [MovieViewModel]()
+                }
+            }
+        }
+    }
     
     func searchByName(_ name: String) {
         
         if name.isEmpty {
-            DispatchQueue.main.async {
-                self.movies = [MovieViewModel]()
-                self.didExecuteSearch = false
-            }
+            self.getPopularMovies()
             return
         }
         
@@ -28,14 +42,12 @@ class MovieListViewModel: ObservableObject {
                 if let movies = moviesResult {
                     DispatchQueue.main.async {
                         self.movies = movies.map(MovieViewModel.init)
-                        self.didExecuteSearch = true
                     }
                 }
             case .failure(let error):
                 print(error.localizedDescription)
                 DispatchQueue.main.async {
                     self.movies = [MovieViewModel]()
-                    self.didExecuteSearch = true
                 }
             }
         }

@@ -10,44 +10,31 @@ import SwiftUI
 struct MovieListView: View {
     
     let movies: [MovieViewModel]
-    var didExecuteSearch: Bool = false
     
     var body: some View {
         if movies.count == 0 {
-            if self.didExecuteSearch {
-                VStack {
-                    Image(systemName: "x.circle")
-                        .font(.system(size: 56.0))
-                        .modifier(PrimaryColorModifier())
-                        .padding(.bottom, 16)
-                          
-                    Text("No movies found!")
-                        .modifier(PrimaryColorModifier())
-                }
-            }
-            else {
-                VStack {
-                    Image(systemName: "magnifyingglass")
-                        .font(.system(size: 56.0))
-                        .modifier(PrimaryColorModifier())
-                        .padding(.bottom, 16)
-                    
-                    Text("Type in the movie name to search for movies")
-                        .modifier(PrimaryColorModifier())
-                }
+            VStack {
+                Image(systemName: "x.circle")
+                    .font(.system(size: 56.0))
+                    .modifier(PrimaryColorModifier())
+                    .padding(.bottom, 16)
+                
+                Text("No movies found!")
+                    .modifier(PrimaryColorModifier())
             }
         }
-        else {            
-            List(self.movies, id: \.imdbId) { movie in
-                NavigationLink(destination: MovieDetailsScreen(imdbId: movie.imdbId)) {
-                    MovieCellView(movie: movie)
+        else {
+                List(self.movies, id: \.imdbId) { movie in
+                    NavigationLink(destination: MovieDetailsScreen(imdbId: movie.imdbId)) {
+                        MovieCellView(movie: movie)
+                    }
+                    .listRowSeparatorTint(Color(Constants.Colors.SeparatorColor))
+                    .listRowBackground(Color(Constants.Colors.LightBackgroundColor))
                 }
-                .listRowSeparatorTint(Color(Constants.Colors.SeparatorColor))
-                .listRowBackground(Color(Constants.Colors.LightBackgroundColor))
-            }
-            .background(Color(Constants.Colors.BackgroundColor))
-            .onAppear {
-                UITableView.appearance().backgroundColor = .clear
+                .padding(.top, 0)
+                .background(Color(Constants.Colors.BackgroundColor))
+                .onAppear {
+                    UITableView.appearance().backgroundColor = .clear
             }
         }
     }

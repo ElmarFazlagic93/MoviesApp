@@ -14,7 +14,6 @@ struct MovieListScreen: View {
     
     var body: some View {
         VStack {
-            
             TextField("Search", text: $movieName, onEditingChanged: { _ in }, onCommit: {
                 self.movieListViewModel.searchByName(self.movieName)
             })
@@ -23,7 +22,7 @@ struct MovieListScreen: View {
             
             Spacer()
             
-            MovieListView(movies: self.movieListViewModel.movies, didExecuteSearch: movieListViewModel.didExecuteSearch)
+            MovieListView(movies: self.movieListViewModel.movies)
                 .navigationTitle("Movies")
                 .modifier(BackgroundColorStyle())
             
@@ -31,6 +30,10 @@ struct MovieListScreen: View {
         }
         .modifier(BackgroundColorStyle())
         .embedNavigationView()
+        
+        .onAppear() {
+            self.movieListViewModel.getPopularMovies()
+        }
     }
 }
 
