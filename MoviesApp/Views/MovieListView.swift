@@ -42,12 +42,11 @@ struct MovieListView: View {
                 NavigationLink(destination: MovieDetailsScreen(imdbId: movie.imdbId)) {
                     MovieCellView(movie: movie)
                 }
-                //.modifier(BackgroundColorStyle())
+                .listRowSeparatorTint(Color(Constants.Colors.SeparatorColor))
                 .listRowBackground(Color(Constants.Colors.LightBackgroundColor))
             }
             .background(Color(Constants.Colors.BackgroundColor))
             .onAppear {
-                // Set the default to clear
                 UITableView.appearance().backgroundColor = .clear
             }
         }

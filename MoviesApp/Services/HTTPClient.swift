@@ -21,7 +21,7 @@ class HTTPClient {
             return completion(.failure(.badURL))
         }
         
-        URLSession.shared.dataTask(with: url) { data, response, error in
+        let dataTask = URLSession.shared.dataTask(with: url) { data, response, error in
             guard let data = data, error == nil else {
                 return completion(.failure(.noData))
             }
@@ -32,7 +32,9 @@ class HTTPClient {
             
             completion(.success(moviesResponse.movies))
             
-        }.resume()
+        }
+            
+        dataTask.resume()
     }
     
     func getMovieDetailsBy(imdbId: String, completion: @escaping (Result<MovieDetails, NetworkError>) -> Void) {
@@ -41,7 +43,7 @@ class HTTPClient {
             return completion(.failure(.badURL))
         }
 
-        URLSession.shared.dataTask(with: url) { data, response, error in
+        let dataTask = URLSession.shared.dataTask(with: url) { data, response, error in
             guard let data = data, error == nil else {
                 return completion(.failure(.noData))
             }
@@ -49,7 +51,18 @@ class HTTPClient {
             guard let movieDetails = try? JSONDecoder().decode(MovieDetails.self, from: data) else{
                 return completion(.failure(.decodingError))
             }
+            
             completion(.success(movieDetails))
-        }.resume()
+        }
+        
+        dataTask.resume()
+    }
+    
+    func sendRatingForMovie(rating: Rating){
+        print("Rated movie with imdbId: \(rating.imdbId)")
+        print(rating)
+        // This is just an placeholder method
+        // Here we would perform an API call to send and store the rating for a given movie
+        // But since I used an existing public API I don't have that feature on the API side
     }
 }

@@ -10,6 +10,7 @@ import SwiftUI
 struct MovieDetailsView: View {
     
     @ObservedObject var movieDetailsViewModel: MovieDetatailsViewModel
+    @State private var showTestScreen = false
     
     var body: some View {
         ScrollView {
@@ -17,9 +18,13 @@ struct MovieDetailsView: View {
                 UrlImage(url: movieDetailsViewModel.poster)
                     .cornerRadius(10)
                 
-                Text(movieDetailsViewModel.title)
-                    .font(.title)
+                HStack {
+                    Text(movieDetailsViewModel.title)
+                        .font(.title)
                     .modifier(PrimaryColorModifier())
+                    Spacer()
+                    RatedView(rated: .constant(movieDetailsViewModel.rated))
+                }
                 Text(movieDetailsViewModel.plot)
                     .modifier(PrimaryColorModifier())
                 Text("Director")
@@ -32,10 +37,19 @@ struct MovieDetailsView: View {
                     RatingView(rating: .constant(movieDetailsViewModel.rating))
                     Text("\(movieDetailsViewModel.rating)/10")
                         .modifier(PrimaryColorModifier())
-                }.padding(.top, 10)
+                }.padding(.top, 5)
                 
                 Spacer()
                 
+                HStack {
+                    Spacer()
+                    Button("Add Rating") {
+                            showTestScreen = true
+                        }.sheet(isPresented: $showTestScreen) {} content: {
+                            RatingScreen(imdbId: movieDetailsViewModel.imdbId, movieTitle: movieDetailsViewModel.title)
+                        }
+                    Spacer()
+                }
             }.padding()            
             .modifier(BackgroundColorStyle())
             .navigationTitle(movieDetailsViewModel.title)

@@ -29,6 +29,10 @@ class MovieDetatailsViewModel: ObservableObject {
         }
     }
     
+    var imdbId: String {
+        self.movieDetails?.imdbId ?? ""
+    }
+    
     var title: String {
         self.movieDetails?.title ?? ""
     }
@@ -50,5 +54,9 @@ class MovieDetatailsViewModel: ObservableObject {
     
     var director: String {
         self.movieDetails?.director ?? ""
+    }
+    
+    var rated: String {
+        self.movieDetails?.rated ?? ""
     }
 }

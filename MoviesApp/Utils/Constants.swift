@@ -14,5 +14,6 @@ struct Constants {
         static let BackgroundColor = "BackgroundColor"
         static let LightBackgroundColor = "LightBackgroundColor"
         static let PrimaryTextColor = "PrimaryTextColor"
+        static let SeparatorColor = "SeparatorColor"
     }
 }
